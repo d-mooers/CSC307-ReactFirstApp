@@ -8,10 +8,12 @@ function MyApp() {
   const removeOneCharacter = (index) =>
     setCharacters(characters.filter((_, i) => i != index));
 
+  const updateList = (person) => setCharacters([...characters, person]);
+
   return (
     <div className="container">
       <Table data={characters} removeCharacter={removeOneCharacter} />
-      <Form />
+      <Form handleSubmit={updateList} />
     </div>
   );
 }

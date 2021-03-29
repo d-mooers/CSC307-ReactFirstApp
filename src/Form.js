@@ -1,10 +1,17 @@
 import React, { useState } from "react";
 
+const DEFAULT_PERSON = {
+  name: "",
+  job: "",
+};
+
 const Form = (props) => {
-  const [person, setPerson] = useState({
-    name: "",
-    job: "",
-  });
+  const [person, setPerson] = useState(DEFAULT_PERSON);
+
+  const submitForm = () => {
+    props.handleSubmit(person);
+    setPerson(DEFAULT_PERSON);
+  };
 
   const handleChange = (event) => {
     const { name, value } = event.target;
@@ -30,6 +37,7 @@ const Form = (props) => {
         value={person.job}
         onChange={handleChange}
       />
+      <input type="button" value="Submit" onClick={submitForm} />
     </form>
   );
 };
