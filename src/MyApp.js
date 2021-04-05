@@ -9,7 +9,7 @@ const makePostCall = (character) =>
     .post(`${dev_url}/users`, character)
     .then((res) => {
       console.log(res);
-      return res.status === 200;
+      return res.status === 201;
     })
     .catch((e) => {
       console.log(e);
