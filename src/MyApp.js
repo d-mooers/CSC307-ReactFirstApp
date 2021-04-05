@@ -9,11 +9,14 @@ const makePostCall = (character) =>
     .post(`${dev_url}/users`, character)
     .then((res) => {
       console.log(res);
-      return res.status === 201;
+      return {
+        success: res.status === 201,
+        char: res.data,
+      };
     })
     .catch((e) => {
       console.log(e);
-      return false;
+      return e;
     });
 function MyApp() {
   const [characters, setCharacters] = useState([]);
@@ -38,7 +41,9 @@ function MyApp() {
     setCharacters(characters.filter((_, i) => i != index));
 
   const updateList = async (person) => {
-    (await makePostCall(person)) && setCharacters([...characters, person]);
+    const addedChar = await makePostCall(person);
+    if (addedChar.success) setCharacters([...characters, addedChar.char]);
+    else setError(true);
   };
 
   return (
