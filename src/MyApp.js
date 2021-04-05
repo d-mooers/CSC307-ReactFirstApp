@@ -53,7 +53,7 @@ function MyApp() {
   const removeOneCharacter = (index) => {
     const charId = characters[index].id;
     const deleted = makeDeleteCall(charId);
-    if (deleted) setCharacters(characters.filter((_, i) => i != index));
+    if (deleted) setCharacters(characters.filter((_, i) => i !== index));
     else setError(true);
   };
 
