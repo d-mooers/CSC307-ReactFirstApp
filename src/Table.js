@@ -1,9 +1,10 @@
 import React from "react";
 
-const Row = ({ name, job, removeCharacter }) => (
+const Row = ({ name, job, id, removeCharacter }) => (
   <tr>
     <td>{name}</td>
     <td>{job}</td>
+    <td>{id}</td>
     <td>
       <button onClick={removeCharacter}>Delete</button>
     </td>
@@ -16,6 +17,7 @@ const TableBody = ({ data, removeCharacter }) => (
       <Row
         name={itm.name}
         job={itm.job}
+        id={itm.id}
         key={i}
         removeCharacter={() => removeCharacter(i)}
       />
@@ -28,6 +30,7 @@ const TableHeader = () => (
     <tr>
       <th>Name</th>
       <th>Job</th>
+      <th>Id</th>
       <th>Remove</th>
     </tr>
   </thead>
