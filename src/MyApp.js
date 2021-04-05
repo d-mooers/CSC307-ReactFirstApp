@@ -18,6 +18,19 @@ const makePostCall = (character) =>
       console.log(e);
       return e;
     });
+
+const makeDeleteCall = (id) =>
+  axios
+    .delete(`${dev_url}/users/${id}`)
+    .then((res) => {
+      console.log(res);
+      return res.status === 200;
+    })
+    .catch((e) => {
+      console.log(e);
+      return false;
+    });
+
 function MyApp() {
   const [characters, setCharacters] = useState([]);
   const [error, setError] = useState(false);
@@ -37,8 +50,12 @@ function MyApp() {
       });
   }, []);
 
-  const removeOneCharacter = (index) =>
-    setCharacters(characters.filter((_, i) => i != index));
+  const removeOneCharacter = (index) => {
+    const charId = characters[index].id;
+    const deleted = makeDeleteCall(charId);
+    if (deleted) setCharacters(characters.filter((_, i) => i != index));
+    else setError(true);
+  };
 
   const updateList = async (person) => {
     const addedChar = await makePostCall(person);
