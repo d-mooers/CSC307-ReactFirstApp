@@ -6,7 +6,7 @@ function MyApp() {
   const [characters, setCharacters] = useState([]);
 
   const removeOneCharacter = (index) =>
-    setCharacters(characters.filter((_, i) => i != index));
+    setCharacters(characters.filter((_, i) => i !== index));
 
   const updateList = (person) => setCharacters([...characters, person]);
 
