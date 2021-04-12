@@ -8,7 +8,6 @@ const makePostCall = (character) =>
   axios
     .post(`${dev_url}/users`, character)
     .then((res) => {
-      console.log(res);
       return {
         success: res.status === 201,
         char: res.data,
@@ -23,8 +22,7 @@ const makeDeleteCall = (id) =>
   axios
     .delete(`${dev_url}/users/${id}`)
     .then((res) => {
-      console.log(res);
-      return res.status === 200;
+      return res.status === 204;
     })
     .catch((e) => {
       console.log(e);
@@ -33,8 +31,8 @@ const makeDeleteCall = (id) =>
 
 function MyApp() {
   const [characters, setCharacters] = useState([]);
-  const [error, setError] = useState(false);
-  const [loading, setLoading] = useState(true);
+  //const [error, setError] = useState(false);
+  //const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     axios
@@ -42,25 +40,25 @@ function MyApp() {
       .then((res) => {
         const characters = res.data.users_list;
         setCharacters(characters);
-        setLoading(false);
+        //setLoading(false);
       })
       .catch((e) => {
         console.log(e);
-        setError(true);
+        //setError(true);
       });
   }, []);
 
-  const removeOneCharacter = (index) => {
+  const removeOneCharacter = async (index) => {
     const charId = characters[index].id;
-    const deleted = makeDeleteCall(charId);
+    const deleted = await makeDeleteCall(charId);
     if (deleted) setCharacters(characters.filter((_, i) => i !== index));
-    else setError(true);
+    //else setError(true);
   };
 
   const updateList = async (person) => {
     const addedChar = await makePostCall(person);
     if (addedChar.success) setCharacters([...characters, addedChar.char]);
-    else setError(true);
+    else console.log("Something went wrong trying to add character...");
   };
 
   return (
